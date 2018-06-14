@@ -1,15 +1,19 @@
 package courses
 
+import (
+	m "github.com/nicolasjhampton/course-api-go/internal/models"
+)
+
 func seedCourses() {
-	DB.DropTable(&Course{})
-	DB.AutoMigrate(&Course{})
-	DB.Create(&Course{
+	DB.DropTable(&m.Course{})
+	DB.AutoMigrate(&m.Course{})
+	DB.Create(&m.Course{
 		Title: "Build a Basic Bookcase",
 	})
-	DB.Create(&Course{
+	DB.Create(&m.Course{
 		Title: "Learn How to Program",
 	})
-	DB.Create(&Course{
+	DB.Create(&m.Course{
 		Title: "New Course Updated Again Hello",
 	})
 }

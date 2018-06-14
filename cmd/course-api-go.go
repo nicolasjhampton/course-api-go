@@ -4,7 +4,8 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/jinzhu/gorm"
   _ "github.com/jinzhu/gorm/dialects/sqlite"
-	"github.com/nicolasjhampton/course-api-go/pkg/courses"
+    "github.com/nicolasjhampton/course-api-go/internal/routes/courses"
+    "github.com/nicolasjhampton/course-api-go/internal/routes/users"
 )
 
 func main() {
@@ -21,7 +22,9 @@ func main() {
     
     v1 := api.Group("/v1")
 
-	courses.Routes(v1, db)
+    courses.Routes(v1, db)
+    
+    users.Routes(v1, db)
 
     
     
