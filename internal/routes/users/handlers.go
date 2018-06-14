@@ -6,21 +6,20 @@ import (
 )
 
 func GetUser(c *gin.Context) {
-	var user m.User;
-	DB.First(&user/*, id*/)
+	user := c.MustGet(gin.AuthUserKey).(*m.User)
 	c.JSON(200, user)
+}
+
+func GetUsers(c *gin.Context) {
+	var users []m.User;
+	DB.Find(&users)
+	c.JSON(200, users)
 }
 
 func CreateUser(c *gin.Context) {
 	var user m.User;
-	var juser m.JsonUser;
-	if err := c.BindJSON(&juser); err == nil {
-		DB.FirstOrCreate(&user, m.User{
-			Name: juser.Name,
-			Email: juser.Email,
-			Password: juser.Password,
-			Version: "0",
-		})
+	if err := c.BindJSON(&user); err == nil {
+		DB.FirstOrCreate(&user, user)
 		c.JSON(200, user)
 	} else {
 		c.JSON(400, gin.H{})
