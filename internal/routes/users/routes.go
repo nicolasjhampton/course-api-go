@@ -13,6 +13,7 @@ func Routes(g gin.IRouter, db *gorm.DB) {
 	DB = db;
 	DB.DropTable(&m.User{})
 	DB.AutoMigrate(&m.User{})
+	DB.Model(&m.Course{}).Related(&m.User{})
 	seedUsers()
 	users := g.Group("/users")
 	{

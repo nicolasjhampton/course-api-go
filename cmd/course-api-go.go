@@ -22,9 +22,11 @@ func main() {
     
     v1 := api.Group("/v1")
 
+    users.Routes(v1, db)
+
     courses.Routes(v1, db)
     
-    users.Routes(v1, db)
+    
 
     
     

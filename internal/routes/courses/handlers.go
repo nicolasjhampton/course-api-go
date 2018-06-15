@@ -14,6 +14,6 @@ func GetCourses(c *gin.Context) {
 func GetCourse(c *gin.Context) {
 	var course m.Course;
 	id := c.Param("id")
-	DB.First(&course, id)
+	DB.Preload("User").First(&course, id)
 	c.JSON(200, course)
 }

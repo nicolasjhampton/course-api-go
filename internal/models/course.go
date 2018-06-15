@@ -6,7 +6,8 @@ import (
 
 type Course struct {
 	gorm.Model
-	//User        User     `json:"user"`
+	UserID      int      `json:"-"`
+	User 				User     `json:"user"`//`gorm:"foreignkey:UserID;association_foreignkey:ID"`
 	Title       string   `json:"title"`
 	Description string   `json:"description"`
 	Time        string   `json:"estimatedTime"`
@@ -15,6 +16,7 @@ type Course struct {
 	//Reviews     []Review `json:"reviews"`
 	//Steps       []Step   `json:"steps"`
 }
+
 
 // type Review struct {
 // 	Id      string `json:"_id"`
