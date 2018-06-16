@@ -3,17 +3,13 @@ package users
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	m "github.com/nicolasjhampton/course-api-go/internal/models"
 	auth "github.com/nicolasjhampton/course-api-go/internal/middleware/authorization"
 )
 
-var DB *gorm.DB;
+var DB *gorm.DB
 
-func Routes(g gin.IRouter, db *gorm.DB) {
-	DB = db;
-	DB.DropTable(&m.User{})
-	DB.AutoMigrate(&m.User{})
-	DB.Model(&m.Course{}).Related(&m.User{})
+func Routes(g gin.IRouter, db *gorm.DB) *gin.RouterGroup {
+	DB = db
 	seedUsers()
 	users := g.Group("/users")
 	{
@@ -21,4 +17,6 @@ func Routes(g gin.IRouter, db *gorm.DB) {
 		users.POST("/", CreateUser)
 		users.GET("/all", auth.Admin(DB), GetUsers)
 	}
+	user := users.Group("/:id")
+	return user
 }

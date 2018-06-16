@@ -1,22 +1,21 @@
 package models
 
 import (
-    "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 )
 
 type Course struct {
 	gorm.Model
-	UserID      int      `json:"-"`
-	User 				User     `json:"user"`//`gorm:"foreignkey:UserID;association_foreignkey:ID"`
+	UserID      uint      //`json:"-"`
+	User        User     `json:"user"`
 	Title       string   `json:"title"`
 	Description string   `json:"description"`
 	Time        string   `json:"estimatedTime"`
 	Materials   string   `json:"materialsNeeded"`
 	Version     string   `json:"__v"`
-	//Reviews     []Review `json:"reviews"`
+	Reviews     []Review `json:"reviews"`
 	//Steps       []Step   `json:"steps"`
 }
-
 
 // type Review struct {
 // 	Id      string `json:"_id"`

@@ -1,22 +1,23 @@
 package authorization
 
 import (
+	"encoding/base64"
+	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	m "github.com/nicolasjhampton/course-api-go/internal/models"
-	"fmt"
+	"net/http"
 	"regexp"
-	"encoding/base64"
 	"strings"
-	"errors"
 )
 
 type auth struct {
 	Email string
-	Pass string
+	Pass  string
 }
 
-var admins []string = []string{ 
+var admins []string = []string{
 	"sam@smith.com",
 }
 
@@ -32,9 +33,9 @@ func Required(DB *gorm.DB) gin.HandlerFunc {
 
 func authorize(DB *gorm.DB, needsAdmin bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var user *m.User;
-		var auth *auth;
-		var err error;
+		var user *m.User
+		var auth *auth
+		var err error
 
 		if auth, err = parseAuthHeader(c); err == nil {
 			if user, err = getAuthorizedUser(auth, DB); err == nil {
@@ -43,7 +44,7 @@ func authorize(DB *gorm.DB, needsAdmin bool) gin.HandlerFunc {
 		}
 
 		if err != nil {
-			c.AbortWithStatusJSON(401, gin.H{ "error": err.Error() })
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		} else {
 			c.Set(gin.AuthUserKey, user)
 		}
@@ -67,14 +68,14 @@ func parseAuthHeader(c *gin.Context) (*auth, error) {
 		return nil, errors.New("Authorization header malformed")
 	}
 
-	return &auth{ Email: authArr[0], Pass: authArr[1] }, nil
+	return &auth{Email: authArr[0], Pass: authArr[1]}, nil
 
 }
 
 func getAuthorizedUser(auth *auth, DB *gorm.DB) (*m.User, error) {
-	var user m.User;
-	var err error;
-	DB.Where(&m.User{ Email: auth.Email }).First(&user)
+	var user m.User
+	var err error
+	DB.Where(&m.User{Email: auth.Email}).First(&user)
 	if auth.Email != user.Email || auth.Pass != user.Password {
 		err = errors.New("authentication failure")
 	}
@@ -82,12 +83,14 @@ func getAuthorizedUser(auth *auth, DB *gorm.DB) (*m.User, error) {
 }
 
 func checkAdmin(user *m.User, needsAdmin bool) error {
-	if !needsAdmin { return nil }
-	var authorized = false;
+	if !needsAdmin {
+		return nil
+	}
+	var authorized = false
 	for _, admin := range admins {
 		if admin == user.Email {
-			authorized = true;
-			break;
+			authorized = true
+			break
 		}
 	}
 	if !authorized {

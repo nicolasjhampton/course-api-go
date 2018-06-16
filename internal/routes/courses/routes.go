@@ -3,16 +3,24 @@ package courses
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	auth "github.com/nicolasjhampton/course-api-go/internal/middleware/authorization"
 )
 
-var DB *gorm.DB;
+var DB *gorm.DB
 
-func Routes(g gin.IRouter, db *gorm.DB) {
-	DB = db;
+func Routes(g gin.IRouter, db *gorm.DB) *gin.RouterGroup {
+	DB = db
 	seedCourses()
 	courses := g.Group("/courses")
 	{
 		courses.GET("/", GetCourses)
-		courses.GET("/:id", GetCourse)
+		courses.POST("/", auth.Required(DB), CreateCourse)
 	}
+	course := courses.Group("/:courseid")
+	{
+		course.Use(FindCourse)
+		course.GET("/", GetCourse)
+		// course.PUT("/", UpdateCourse)
+	}
+	return course
 }
