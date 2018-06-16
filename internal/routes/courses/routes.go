@@ -10,7 +10,6 @@ var DB *gorm.DB
 
 func Routes(g gin.IRouter, db *gorm.DB) *gin.RouterGroup {
 	DB = db
-	seedCourses()
 	courses := g.Group("/courses")
 	{
 		courses.GET("/", GetCourses)

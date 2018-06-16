@@ -2,7 +2,7 @@ package users
 
 import (
 	"github.com/gin-gonic/gin"
-	m "github.com/nicolasjhampton/course-api-go/internal/models"
+	m "github.com/nicolasjhampton/course-api-go/internal/database/models"
 	"net/http"
 )
 

@@ -3,17 +3,17 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"github.com/nicolasjhampton/course-api-go/internal/database/DB"
 	"github.com/nicolasjhampton/course-api-go/internal/routes/courses"
 	"github.com/nicolasjhampton/course-api-go/internal/routes/reviews"
 	"github.com/nicolasjhampton/course-api-go/internal/routes/users"
 )
 
 func main() {
-
-	db, err := gorm.Open("sqlite3", "test.db")
-	if err != nil {
-		panic("failed to connect database")
+	var db *gorm.DB;
+	var err error;
+	if db, err = DB.Setup(); err != nil {
+		panic(err.Error())
 	}
 	defer db.Close()
 
@@ -29,5 +29,5 @@ func main() {
 
 	_ = reviews.Routes(course, db)
 
-	router.Run(":5000") // listen and serve on 0.0.0.0:8080
+	router.Run(":5000")
 }

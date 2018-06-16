@@ -10,7 +10,6 @@ var DB *gorm.DB
 
 func Routes(g gin.IRouter, db *gorm.DB) *gin.RouterGroup {
 	DB = db
-	seedReviews()
 	reviews := g.Group("/reviews")
 	{
 		reviews.POST("/", auth.Required(DB), CreateReview)

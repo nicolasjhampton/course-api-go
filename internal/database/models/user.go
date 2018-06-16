@@ -1,9 +1,5 @@
 package models
 
-// import (
-// 	"github.com/jinzhu/gorm"
-// )
-
 type User struct {
 	ID       uint    `json:"_id"`
 	Name     string `json:"fullName"`

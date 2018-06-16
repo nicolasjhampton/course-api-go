@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	m "github.com/nicolasjhampton/course-api-go/internal/models"
+	m "github.com/nicolasjhampton/course-api-go/internal/database/models"
 	"net/http"
 	"regexp"
 	"strings"

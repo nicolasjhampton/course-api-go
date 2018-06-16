@@ -3,7 +3,7 @@ package courses
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	m "github.com/nicolasjhampton/course-api-go/internal/models"
+	m "github.com/nicolasjhampton/course-api-go/internal/database/models"
 	"net/http"
 )
 
@@ -23,7 +23,7 @@ func GetCourses(c *gin.Context) {
 func FindCourse(c *gin.Context) {
 	var course m.Course
 	id := c.Param("courseid")
-	DB.Preload("User").Preload("Reviews").First(&course, id)
+	DB.Preload("User").Preload("Reviews").Preload("Steps").First(&course, id)
 	c.Set("course", course)
 }
 

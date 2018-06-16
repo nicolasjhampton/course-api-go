@@ -10,7 +10,6 @@ var DB *gorm.DB
 
 func Routes(g gin.IRouter, db *gorm.DB) *gin.RouterGroup {
 	DB = db
-	seedUsers()
 	users := g.Group("/users")
 	{
 		users.GET("/", auth.Required(DB), GetUser)
