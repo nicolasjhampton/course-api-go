@@ -1,10 +1,10 @@
 package reviews
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	m "github.com/nicolasjhampton/course-api-go/internal/database/models"
 	"net/http"
-	"fmt"
 )
 
 func CreateReview(c *gin.Context) {

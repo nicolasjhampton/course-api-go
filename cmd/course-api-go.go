@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	var db *gorm.DB;
-	var err error;
+	var db *gorm.DB
+	var err error
 	if db, err = DB.Setup(); err != nil {
 		panic(err.Error())
 	}

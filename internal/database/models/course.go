@@ -1,7 +1,7 @@
 package models
 
 type Course struct {
-	ID          uint `json:"_id"`
+	ID          uint     `json:"_id"`
 	UserID      uint     `json:"-"`
 	User        User     `json:"user"`
 	Title       string   `json:"title"`

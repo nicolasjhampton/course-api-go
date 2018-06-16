@@ -1,12 +1,12 @@
 package seed
 
 import (
-	"github.com/jinzhu/gorm"
 	"errors"
 	"fmt"
+	"github.com/jinzhu/gorm"
 )
 
-type SeedFunc func(*gorm.DB)error;
+type SeedFunc func(*gorm.DB) error
 
 var seeds = []SeedFunc{
 	userseeds,
@@ -17,12 +17,12 @@ var seeds = []SeedFunc{
 func RunTx(DB *gorm.DB) error {
 	tx := DB.Begin()
 	defer func() {
-    if r := recover(); r != nil {
+		if r := recover(); r != nil {
 			tx.Rollback()
-    }
-  }()
+		}
+	}()
 
-  if tx.Error != nil {
+	if tx.Error != nil {
 		return errors.New("failed to start transactions")
 	}
 
@@ -31,6 +31,6 @@ func RunTx(DB *gorm.DB) error {
 			return errors.New(fmt.Sprintf("Transaction failed: %v", err))
 		}
 	}
-	
+
 	return tx.Commit().Error
 }
