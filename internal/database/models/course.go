@@ -1,11 +1,7 @@
 package models
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 type Course struct {
-	gorm.Model
+	ID          uint `json:"_id"`
 	UserID      uint     `json:"-"`
 	User        User     `json:"user"`
 	Title       string   `json:"title"`

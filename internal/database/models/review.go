@@ -1,11 +1,7 @@
 package models
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 type Review struct {
-	gorm.Model
+	ID          uint `json:"_id"`
 	UserID  uint `json:"user"`
 	CourseID  uint `json:"-"`
 	Rating  string `json:"rating"`
