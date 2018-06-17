@@ -1,7 +1,6 @@
 package seed
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
 	m "github.com/nicolasjhampton/course-api-go/internal/database/models"
 )
@@ -27,13 +26,12 @@ var users = []m.User{
 	},
 }
 
-func userseeds(tx *gorm.DB) error {
+func userseeds(tx *gorm.DB) (err error) {
 	for _, user := range users {
-		if err := tx.Create(&user).Error; err != nil {
-			fmt.Println(err)
+		if err = tx.Create(&user).Error; err != nil {
 			tx.Rollback()
-			return err
+			return
 		}
 	}
-	return nil
+	return
 }

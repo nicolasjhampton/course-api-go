@@ -1,8 +1,6 @@
 package seed
 
 import (
-	"errors"
-	"fmt"
 	"github.com/jinzhu/gorm"
 )
 
@@ -10,11 +8,10 @@ type SeedFunc func(*gorm.DB) error
 
 var seeds = []SeedFunc{
 	userseeds,
-	//reviewseeds,
 	courseseeds,
 }
 
-func RunTx(DB *gorm.DB) error {
+func RunTx(DB *gorm.DB) (err error) {
 	tx := DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -22,15 +19,16 @@ func RunTx(DB *gorm.DB) error {
 		}
 	}()
 
-	if tx.Error != nil {
-		return errors.New("failed to start transactions")
+	if err = tx.Error; err != nil {
+		return
 	}
 
 	for _, s := range seeds {
-		if err := s(tx); err != nil {
-			return errors.New(fmt.Sprintf("Transaction failed: %v", err))
+		if err = s(tx); err != nil {
+			return
 		}
 	}
 
-	return tx.Commit().Error
+	err = tx.Commit().Error
+	return
 }
