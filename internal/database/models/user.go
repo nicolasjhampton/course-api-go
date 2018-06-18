@@ -1,8 +1,8 @@
 package models
 
 import (
-	"strings"
 	"errors"
+	"strings"
 )
 
 type User struct {

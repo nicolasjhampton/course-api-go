@@ -8,9 +8,9 @@ import (
 )
 
 func GetCourses(c *gin.Context) {
-	var results []struct{ 
-		ID uint `json:"_id"`
-    Title  string `json:"title"`
+	var results []struct {
+		ID    uint   `json:"_id"`
+		Title string `json:"title"`
 	}
 	DB.Table("courses").Select("ID, Title").Scan(&results)
 	c.JSON(http.StatusOK, results)
@@ -31,8 +31,8 @@ func GetCourse(c *gin.Context) {
 func CreateCourse(c *gin.Context) {
 	var course m.Course
 	var err error
-	var count int;
-	var status int;
+	var count int
+	var status int
 	if err = c.BindJSON(&course); err == nil {
 		user := c.MustGet(gin.AuthUserKey).(*m.User)
 		courses := DB.Table("courses").Where("Title = ?", course.Title)

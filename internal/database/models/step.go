@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"errors"
+	"github.com/jinzhu/gorm"
 )
 
 type Step struct {
@@ -26,7 +26,7 @@ func (s *Step) BeforeSave() (err error) {
 }
 
 func (s *Step) AfterCreate(tx *gorm.DB) (err error) {
-	var course Course;
+	var course Course
 	tx.Table("courses").First(&course, s.CourseID)
 	tx.Model(s).Update("Number", len(course.Steps))
 	return
