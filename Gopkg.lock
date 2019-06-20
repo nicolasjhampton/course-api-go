@@ -111,3 +111,7 @@
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
+
+[metadata.heroku]
+  root-package = "github.com/nicolasjhampton/course-api-go"
+  install = [ "./..." ]
