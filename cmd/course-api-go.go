@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/nicolasjhampton/course-api-go/internal/database/DB"
@@ -29,5 +31,5 @@ func main() {
 
 	_ = reviews.Routes(course, db)
 
-	router.Run(":5000")
+	router.Run(os.Getenv("PORT"))
 }

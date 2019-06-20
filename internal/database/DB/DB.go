@@ -1,15 +1,16 @@
 package DB
 
 import (
+	"os"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	m "github.com/nicolasjhampton/course-api-go/internal/database/models"
 	"github.com/nicolasjhampton/course-api-go/internal/database/seed"
 )
 
 func Setup() (DB *gorm.DB, err error) {
 	// connect
-	DB, err = gorm.Open("sqlite3", "test.db")
+	DB, err = gorm.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		return
 	}
