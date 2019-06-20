@@ -35,4 +35,4 @@
 
 [metadata.heroku]
   root-package = "github.com/nicolasjhampton/course-api-go"
-  install = [ "./..." ]
+  install = ["./cmd/..."]
